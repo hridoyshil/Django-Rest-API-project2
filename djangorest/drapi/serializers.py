@@ -1,6 +1,5 @@
 from rest_framework import serializers
-
-# from .models import Aiquest
+from .models import Aiquest
 
 
 class Aiquestserializer(serializers.Serializer):
@@ -8,3 +7,6 @@ class Aiquestserializer(serializers.Serializer):
     course_name = serializers.CharField(max_length=20)
     course_duration = serializers.IntegerField()
     seat = serializers.IntegerField()
+
+    def create(self, validated_data):
+        return Aiquest.objects.create(**validated_data)
