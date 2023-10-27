@@ -6,10 +6,10 @@ from .serializers import Aiquestserializer
 from .models import Aiquest
 from rest_framework import mixins
 from rest_framework.generics import GenericAPIView
-from rest_framework.mixins import ListModelMixin, CreateModelMixin
+from rest_framework.mixins import ListModelMixin, CreateModelMixin, RetrieveModelMixin
 
 
-class AiquestList(GenericAPIView, ListModelMixin):
+class listModelMixin(GenericAPIView, ListModelMixin):
     queryset = Aiquest.objects.all()
     serializer_class = Aiquestserializer
 
@@ -20,12 +20,20 @@ class AiquestList(GenericAPIView, ListModelMixin):
     #     return self.create(request, *args, **kwargs)
 
 
-class Aiquestcreate(GenericAPIView, CreateModelMixin):
+class createModelMixin(GenericAPIView, CreateModelMixin):
     queryset = Aiquest.objects.all()
     serializer_class = Aiquestserializer
 
     def post(self, request, *args, **kwargs):
         return self.create(request, *args, **kwargs)
+
+
+class retrieveModelMixin(GenericAPIView, RetrieveModelMixin):
+    queryset = Aiquest.objects.all()
+    serializer_class = Aiquestserializer
+
+    def get(self, request, *args, **kwargs):
+        return self.retrieve(request, *args, **kwargs)
 
 
 # class AiquestCreate(APIView):
