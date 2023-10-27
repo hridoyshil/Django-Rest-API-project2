@@ -1,86 +1,23 @@
 from django.shortcuts import render
 from .serializers import Aiquestserializer
 from .models import Aiquest
-from rest_framework.renderers import JSONRenderer
-from django.http import HttpResponse
-from django.views.decorators.csrf import csrf_exempt
-import io
-from rest_framework.parsers import JSONParser
-
-# Create your views here.
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
 
 
-# Queryset
-def aiquest_info(request):
-    # complex data
-    ai = Aiquest.objects.all()
-    # python dict/native python data
-    serializer = Aiquestserializer(ai, many=True)
-    # render json
-    json_data = JSONRenderer().render(serializer.data)
-    # json sent to user/display/Front-End
-    return HttpResponse(json_data, content_type="application/json")
+@api_view(["GET"])
+def aiquest_create(request, pk=None):
+    if request.method == "GET":
+        id = pk
+        if id is not None:
+            # comples data
+            ai = Aiquest.objects.get(id=id)
+            # python dect
+            serializer = Aiquestserializer(ai)
+            return Response(serializer.data)
 
-
-# model instance
-def aiquest_ins(request, pk):
-    # complex data
-    ai = Aiquest.objects.get(id=pk)
-    # python dict/native python data
-    serializer = Aiquestserializer(ai)
-    # render json
-    json_data = JSONRenderer().render(data=serializer.data)
-    # json sent to user/display/Front-End
-    return HttpResponse(json_data, content_type="application/json")
-
-
-@csrf_exempt
-def aiquest_create(request):
-    if request.method == "POST":
-        json_data = request.body
-        # json to stream convert
-        stream = io.BytesIO(json_data)
-        # stream to python convert
-        pythondata = JSONParser().parse(stream)
-        # python to complex data convert
-        serializer = Aiquestserializer(data=pythondata)
-
-        if serializer.is_valid():
-            serializer.save()
-            res = {"msg": " Successfully insert data!"}
-            json_data = JSONRenderer().render(res)
-            return HttpResponse(json_data, content_type="application/json")
-
-        json_data = JSONRenderer().render(serializer.errors)
-        return HttpResponse(json_data, content_type="application/json")
-
-    if request.method == "PUT":
-        json_data = request.body
-        # json to stream convert
-        stream = io.BytesIO(json_data)
-        # stream to python convert
-        pythondata = JSONParser().parse(stream)
-        id = pythondata.get("id")
-        aiq = Aiquest.objects.get(id=id)
-        serializer = Aiquestserializer(aiq, data=pythondata, partial=True)
-        if serializer.is_valid():
-            serializer.save()
-            res = {"msg": " Successfully update data!"}
-            json_data = JSONRenderer().render(res)
-            return HttpResponse(json_data, content_type="application/json")
-
-        json_data = JSONRenderer().render(serializer.errors)
-        return HttpResponse(json_data, content_type="application/json")
-
-    if request.method == "DELETE":
-        json_data = request.body
-        # json to stream convert
-        stream = io.BytesIO(json_data)
-        # stream to python convert
-        pythondata = JSONParser().parse(stream)
-        id = pythondata.get("id")
-        aiq = Aiquest.objects.get(id=id)
-        aiq.delete()
-        res = {"msg": " Successfully deleted data!"}
-        json_data = JSONRenderer().render(res)
-        return HttpResponse(json_data, content_type="application/json")
+        # complex data
+        ai = Aiquest.objects.all()
+        # python dect
+        serializer = Aiquestserializer(ai, many=True)
+        return Response(serializer.data)
