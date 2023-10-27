@@ -7,6 +7,8 @@ from drapi import views
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("api-auth/", include("rest_framework.urls")),
-    path("aicreate/", views.AiquestCreate.as_view(), name="aicreate"),
-    path("aicreate/<int:pk>", views.AiquestCreate.as_view(), name="aicreate"),
+    path("ailist/", views.AiquestList.as_view(), name="ailist"),
+    path("ailist/<int:pk>", views.AiquestList.as_view(), name="ailist"),
+    # path("aicreate/", views.AiquestCreate.as_view(), name="aicreate"),
+    # path("aicreate/<int:pk>", views.AiquestCreate.as_view(), name="aicreate"),
 ]
