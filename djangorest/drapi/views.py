@@ -1,13 +1,12 @@
 from django.shortcuts import render
 from .serializers import Aiquestserializer
 from .models import Aiquest
-from rest_framework.decorators import api_view
+from rest_framework.views import APIView
 from rest_framework.response import Response
 
 
-@api_view(["GET", "POST", "PUT", "PATCH", "DELETE"])
-def aiquest_create(request, pk=None):
-    if request.method == "GET":
+class AiquestCreate(APIView):
+    def get(self, request, pk=None, format=None):
         id = pk
         if id is not None:
             # comples data
@@ -22,14 +21,14 @@ def aiquest_create(request, pk=None):
         serializer = Aiquestserializer(ai, many=True)
         return Response(serializer.data)
 
-    if request.method == "POST":
+    def post(self, request, format=None):
         serializer = Aiquestserializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response({"msg": "Successfully insert data!"})
         return Response(serializer.errors)
 
-    if request.method == "PUT":
+    def put(self, request, pk, format=None):
         id = pk
         ai = Aiquest.objects.get(pk=id)
         # python dect
@@ -39,7 +38,7 @@ def aiquest_create(request, pk=None):
             return Response({"msg": "Successfully full data update!"})
         return Response(serializer.errors)
 
-    if request.method == "PATCH":
+    def patch(self, request, pk=None, format=None):
         id = pk
         ai = Aiquest.objects.get(pk=id)
         # python dect
@@ -49,7 +48,7 @@ def aiquest_create(request, pk=None):
             return Response({"msg": "partial data update !"})
         return Response(serializer.errors)
 
-    if request.method == "DELETE":
+    def delete(self, request, pk=None, format=None):
         id = pk
         ai = Aiquest.objects.get(pk=id)
         ai.delete()
