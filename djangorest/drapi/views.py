@@ -5,7 +5,7 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
 
-@api_view(["GET"])
+@api_view(["GET", "POST"])
 def aiquest_create(request, pk=None):
     if request.method == "GET":
         id = pk
@@ -21,3 +21,10 @@ def aiquest_create(request, pk=None):
         # python dect
         serializer = Aiquestserializer(ai, many=True)
         return Response(serializer.data)
+
+    if request.method == "POST":
+        serializer = Aiquestserializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response({"msg": "Successfully insert data!"})
+        return Response(serializer.errors)
