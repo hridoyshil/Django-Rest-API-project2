@@ -8,6 +8,3 @@ class Aiquest(models.Model):
     course_name = models.CharField(max_length=20)
     course_duration = models.IntegerField()
     seat = models.IntegerField()
-
-    def __str__(self):
-        return self.teacher_name
