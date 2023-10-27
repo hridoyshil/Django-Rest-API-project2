@@ -4,7 +4,7 @@ import json
 URL = "http://127.0.0.1:8000/aicreate/"
 
 data = {
-    "id": 5,
+    "id": 4,
 }
 
 json_data = json.dumps(data)
