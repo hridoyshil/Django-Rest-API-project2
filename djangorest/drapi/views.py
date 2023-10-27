@@ -15,52 +15,28 @@ from rest_framework.mixins import (
 )
 
 
-class listModelMixin(GenericAPIView, ListModelMixin):
+class Aiquest_list_Create(GenericAPIView, ListModelMixin, CreateModelMixin):
     queryset = Aiquest.objects.all()
     serializer_class = Aiquestserializer
 
     def get(self, request, *args, **kwargs):
         return self.list(request, *args, **kwargs)
 
-    # def post(self, request, *args, **kwargs):
-    #     return self.create(request, *args, **kwargs)
-
-
-class createModelMixin(GenericAPIView, CreateModelMixin):
-    queryset = Aiquest.objects.all()
-    serializer_class = Aiquestserializer
-
     def post(self, request, *args, **kwargs):
         return self.create(request, *args, **kwargs)
 
 
-class retrieveModelMixin(GenericAPIView, RetrieveModelMixin):
+class Aiquest_Retrieve_Update_Destroy(
+    GenericAPIView, RetrieveModelMixin, UpdateModelMixin, DestroyModelMixin
+):
     queryset = Aiquest.objects.all()
     serializer_class = Aiquestserializer
 
     def get(self, request, *args, **kwargs):
         return self.retrieve(request, *args, **kwargs)
 
-
-class updateModelMixin(GenericAPIView, UpdateModelMixin):
-    queryset = Aiquest.objects.all()
-    serializer_class = Aiquestserializer
-
     def put(self, request, *args, **kwargs):
         return self.update(request, *args, **kwargs)
-
-
-class updateModelMixin(GenericAPIView, UpdateModelMixin):
-    queryset = Aiquest.objects.all()
-    serializer_class = Aiquestserializer
-
-    def put(self, request, *args, **kwargs):
-        return self.update(request, *args, **kwargs)
-
-
-class destroyModelMixindelete(GenericAPIView, DestroyModelMixin):
-    queryset = Aiquest.objects.all()
-    serializer_class = Aiquestserializer
 
     def delete(self, request, *args, **kwargs):
         return self.destroy(request, *args, **kwargs)
