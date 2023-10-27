@@ -5,7 +5,7 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
 
-@api_view(["GET", "POST"])
+@api_view(["GET", "POST", "PUT", "PATCH"])
 def aiquest_create(request, pk=None):
     if request.method == "GET":
         id = pk
@@ -27,4 +27,24 @@ def aiquest_create(request, pk=None):
         if serializer.is_valid():
             serializer.save()
             return Response({"msg": "Successfully insert data!"})
+        return Response(serializer.errors)
+
+    if request.method == "PUT":
+        id = pk
+        ai = Aiquest.objects.get(pk=id)
+        # python dect
+        serializer = Aiquestserializer(ai, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response({"msg": "Successfully full data update!"})
+        return Response(serializer.errors)
+
+    if request.method == "PATCH":
+        id = pk
+        ai = Aiquest.objects.get(pk=id)
+        # python dect
+        serializer = Aiquestserializer(ai, data=request.data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response({"msg": "partial data update !"})
         return Response(serializer.errors)
