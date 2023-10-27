@@ -11,6 +11,7 @@ from rest_framework.mixins import (
     CreateModelMixin,
     RetrieveModelMixin,
     UpdateModelMixin,
+    DestroyModelMixin,
 )
 
 
@@ -47,6 +48,22 @@ class updateModelMixin(GenericAPIView, UpdateModelMixin):
 
     def put(self, request, *args, **kwargs):
         return self.update(request, *args, **kwargs)
+
+
+class updateModelMixin(GenericAPIView, UpdateModelMixin):
+    queryset = Aiquest.objects.all()
+    serializer_class = Aiquestserializer
+
+    def put(self, request, *args, **kwargs):
+        return self.update(request, *args, **kwargs)
+
+
+class destroyModelMixindelete(GenericAPIView, DestroyModelMixin):
+    queryset = Aiquest.objects.all()
+    serializer_class = Aiquestserializer
+
+    def delete(self, request, *args, **kwargs):
+        return self.destroy(request, *args, **kwargs)
 
 
 # class AiquestCreate(APIView):

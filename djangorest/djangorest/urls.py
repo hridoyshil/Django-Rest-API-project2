@@ -12,6 +12,9 @@ urlpatterns = [
     path("aicreate/", views.createModelMixin.as_view(), name="aicreate"),
     path("airetrieve/<int:pk>/", views.retrieveModelMixin.as_view(), name="airetrieve"),
     path("aiupdate/<int:pk>/", views.updateModelMixin.as_view(), name="aiupdate"),
+    path(
+        "aidelete/<int:pk>/", views.destroyModelMixindelete.as_view(), name="aidelete"
+    ),
     # path("aicreate/", views.AiquestCreate.as_view(), name="aicreate"),
     # path("aicreate/<int:pk>", views.AiquestCreate.as_view(), name="aicreate"),
 ]
