@@ -1,16 +1,16 @@
 from django.contrib import admin
 from django.urls import path, include
 from drapi import views
+from rest_framework.routers import DefaultRouter
 
-# from drapi.views import aiquest_create
+# create router object
+router = DefaultRouter()
+# router register
+router.register("viewsets", views.Aiquest_Model_ViewSet, basename="hridoy")
+
 
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("api-auth/", include("rest_framework.urls")),
-    path("", views.Aiquest_list_Create.as_view(), name="ailist"),
-    path(
-        "<int:pk>/",
-        views.Aiquest_Retrieve_Update_Destroy.as_view(),
-        name="airetrieve",
-    ),
+    path("", include(router.urls)),
 ]
