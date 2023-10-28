@@ -5,41 +5,17 @@ from django.shortcuts import render
 from .serializers import Aiquestserializer
 from .models import Aiquest
 from rest_framework import mixins
-from rest_framework.generics import GenericAPIView
-from rest_framework.mixins import (
-    ListModelMixin,
-    CreateModelMixin,
-    RetrieveModelMixin,
-    UpdateModelMixin,
-    DestroyModelMixin,
-)
+from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
 
 
-class Aiquest_list_Create(GenericAPIView, ListModelMixin, CreateModelMixin):
+class Aiquest_list_Create(ListCreateAPIView):
     queryset = Aiquest.objects.all()
     serializer_class = Aiquestserializer
 
-    def get(self, request, *args, **kwargs):
-        return self.list(request, *args, **kwargs)
 
-    def post(self, request, *args, **kwargs):
-        return self.create(request, *args, **kwargs)
-
-
-class Aiquest_Retrieve_Update_Destroy(
-    GenericAPIView, RetrieveModelMixin, UpdateModelMixin, DestroyModelMixin
-):
+class Aiquest_Retrieve_Update_Destroy(RetrieveUpdateDestroyAPIView):
     queryset = Aiquest.objects.all()
     serializer_class = Aiquestserializer
-
-    def get(self, request, *args, **kwargs):
-        return self.retrieve(request, *args, **kwargs)
-
-    def put(self, request, *args, **kwargs):
-        return self.update(request, *args, **kwargs)
-
-    def delete(self, request, *args, **kwargs):
-        return self.destroy(request, *args, **kwargs)
 
 
 # class AiquestCreate(APIView):
